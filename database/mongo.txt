@@ -1,0 +1,141 @@
+#1,链接
+mongo username:password@hostname/database
+
+
+#2,show dbs
+show dbs
+
+
+#3,show current dbs
+db
+
+
+#4,switch db
+use db'name
+
+
+#5,create new db
+use db'name
+
+
+#6,delete db(pyaglo)
+use paylgo
+db.dropDatabase()
+
+
+#7,delete collection.name(site)
+db.site.drop()
+
+
+#8,show tables
+show tables
+
+
+#9,db.collection_name.insert(document)
+db.collection.insertOne():向指定集合中插入一条文档数据
+insertOne 文档就是字典
+db.collection.insertMany():向指定集合中插入多条文档数据
+insertMany就是list
+
+
+#10,update col ,title,
+第一个参数是全部插入，第二个参数是全部更新
+更新第一条记录：
+db.col.update( { "count" : { $gt : 1 } } , { $set : { "test2" : "OK"} } );
+全部更新：
+db.col.update( { "count" : { $gt : 3 } } , { $set : { "test2" : "OK"} },false,true );
+只添加第一条：
+db.col.update( { "count" : { $gt : 4 } } , { $set : { "test5" : "OK"} },true,false );
+全部添加加进去:
+db.col.update( { "count" : { $gt : 5 } } , { $set : { "test5" : "OK"} },true,true );
+
+
+#11,show dbdate
+db.col.find().pretty()
+
+
+#12, save
+db.col.save({
+    "_id" : ObjectId("56064f89ade2f21f36b03136"),
+    "title" : "MongoDB",
+    "description" : "MongoDB 是一个 Nosql 数据库",
+    "by" : "Runoob",
+    "url" : "http://www.runoob.com",
+    "tags" : [
+            "mongodb",
+            "NoSQL"
+    ],
+    "likes" : 110
+})
+
+#13,delete doc 
+## delete one 
+db.COLLECTION_NAME.remove(DELETION_CRITERIA,1)
+## delete all
+db.COLLECTION_NAME.remove(DELETION_CRITERIA)
+
+
+#14, find
+db.collection.find(query, projection)
+## 
+'''
+等于		{<key>:<value>}			db.col.find({"by":"菜鸟教程"}).pretty()		where by = '菜鸟教程'
+小于		{<key>:{$lt:<value>}}	db.col.find({"likes":{$lt:50}}).pretty()	where likes < 50
+小于或等于	{<key>:{$lte:<value>}}	db.col.find({"likes":{$lte:50}}).pretty()	where likes <= 50
+大于		{<key>:{$gt:<value>}}	db.col.find({"likes":{$gt:50}}).pretty()	where likes > 50
+大于或等于	{<key>:{$gte:<value>}}	db.col.find({"likes":{$gte:50}}).pretty()	where likes >= 50
+不等于		{<key>:{$ne:<value>}}	db.col.find({"likes":{$ne:50}}).pretty()	where likes != 50
+'''
+## and 
+### db.col.find({key1:value1, key2:value2}).pretty()
+## where likes>50 AND (by = '菜鸟教程' OR title = 'MongoDB 教程')'
+db.col.find({"likes": {$gt:50}, $or: [{"by": "菜鸟教程"},{"title": "MongoDB 教程"}]}).pretty()
+
+
+#15, delete collection.doc 
+db.col.remove({})
+
+
+#16,type
+Double				1	 
+String				2	 
+Object				3	 
+Array				4	 
+Binary data			5	 
+Undefined			6	已废弃。
+Object id			7	 
+Boolean				8	 
+Date				9	 
+Null				10	 
+Regular Expression	11	 
+JavaScript			13	 
+Symbol				14	 
+JavaScript			15	 
+32-bit integer		16	 
+Timestamp			17	 
+64-bit integer		18	 
+Min key				255	Query with -1.
+Max key				127
+
+
+#17 limit or skip
+##limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数。
+db.COLLECTION_NAME.find().limit(NUMBER)
+##可以使用skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数。
+db.COLLECTION_NAME.find().skip(NUMBER)
+
+
+#18, sort
+db.COLLECTION_NAME.find().sort({'key':'value'})
+
+##19,MongoDB使用 ensureIndex() 方法来创建索引
+db.COLLECTION_NAME.ensureIndex({KEY:1})
+
+#20,MongoDB中聚合的方法使用aggregate()
+db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)
+
+
+for(i=0;i<10000;i++)
+{  
+  db.col.insert({"idx":i,name:"user "+i,age:i%90})；
+}
